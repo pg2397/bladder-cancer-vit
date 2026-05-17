@@ -1,0 +1,67 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/
+.python-version
+
+# --- Jupyter ---
+.ipynb_checkpoints/
+*.ipynb_meta
+profile_default/
+
+# --- IDE / OS ---
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- ML artifacts that don't belong in the tree ---
+# Trained checkpoints are published as GitHub Release assets, not in the repo.
+*.pth
+*.pt
+*.ckpt
+*.bin
+*.safetensors
+
+# Raw / patient data must never be committed.
+*.pkl
+*.h5
+*.hdf5
+*.npy
+*.npz
+data/raw/
+data/full/
+data/cell_specimens_data/
+
+# Logs / experiment tracking
+runs/
+lightning_logs/
+mlruns/
+wandb/
+tb_logs/
+# Keep the report's reference training log (see negation below).
+*.log
+!results/logs/*.log
+
+# Local environment files
+.env
+.env.*
+secrets/
+
+# Coverage / pytest
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Misc
+tmp/
+scratch/

@@ -1,0 +1,68 @@
+# Primary ViT + U-Net experiment.
+# Matches Appendix C of the report.
+
+experiment:
+  name: vit_seg_baseline
+  seed: 42
+  deterministic: true
+
+data:
+  root: data/cell_specimens_data
+  train_split: 0.70
+  val_split:   0.15
+  test_split:  0.15
+  num_classes: 3                  # background / cytoplasm / nucleus
+  input_size: 224                 # ViT-Base/16 patch grid friendly
+  align_crop_to: 16               # align random-crop corners to ViT patch grid
+  normalise:
+    mean: [0.485, 0.456, 0.406]   # ImageNet stats - matches the pretraining regime
+    std:  [0.229, 0.224, 0.225]
+  augmentation:
+    geometric:                    # always on
+      hflip_p: 0.5
+      vflip_p: 0.5
+      rot_deg: 15
+    photometric:                  # off in the primary run; see vit_augmented.yaml
+      enabled: false
+
+model:
+  encoder: vit_base_patch16_224
+  pretrained: imagenet21k         # via timm
+  decoder: unet
+  decoder_channels: [256, 128, 64, 32]
+  skip_connections_from: [3, 6, 9, 12]
+  num_classes: 3
+
+loss:
+  type: cross_entropy
+  weighting: inverse_frequency    # actual values normalised to sum to num_classes
+  class_weights: [0.84, 0.69, 1.47]
+
+optim:
+  optimizer: adamw
+  betas: [0.9, 0.999]
+  weight_decay: 1.0e-4
+  encoder_lr: 1.0e-5              # differential LR: small for pretrained encoder
+  decoder_lr: 1.0e-4              # larger for freshly-initialised decoder
+  scheduler: cosine
+  scheduler_T_max: 80             # = epochs
+  grad_clip: 1.0
+
+train:
+  epochs: 80
+  batch_size: 16
+  val_batch_size: 8               # 16 OOMs on a 10 GB RTX 3080 at validation
+  amp: true                       # mixed-precision; loss computed in fp32
+  num_workers: 4
+  early_stopping: false
+  checkpoint_top_k: 3             # SWA-style ensemble of top-3 val checkpoints
+
+inference:
+  post_process:
+    min_component_area: 50
+    morphological_closing_radius: 3
+
+paths:
+  output_dir: results/runs/vit_seg_baseline
+  weights_out: results/weights/vit_seg_best.pth
+  metrics_out: results/metrics/vit_test.json

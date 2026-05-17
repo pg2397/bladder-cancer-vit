@@ -1,0 +1,28 @@
+# Classical baseline 2: K-Means clustering on RGB pixel intensities.
+
+experiment:
+  name: kmeans_baseline
+  seed: 42
+
+data:
+  root: data/cell_specimens_data
+  test_split_only: true
+  test_split: 0.15
+  num_classes: 3
+
+method:
+  type: kmeans
+  feature_space: rgb              # cluster on the 3-D RGB vector per pixel
+  n_clusters: 3                   # background / cytoplasm / nucleus
+  n_init: 10                      # scikit-learn KMeans n_init
+  max_iter: 300
+  init: k-means++
+  cluster_label_assignment: auto  # match clusters to classes by mean intensity
+
+post_process:
+  min_component_area: 50
+  morphological_closing_radius: 3
+
+paths:
+  output_dir: results/runs/kmeans_baseline
+  metrics_out: results/metrics/kmeans_test.json

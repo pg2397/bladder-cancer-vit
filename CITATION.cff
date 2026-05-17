@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use this software or the accompanying report, please cite it as below."
+title: "Automated Bladder Cancer Screening using Vision Transformer (ViT)"
+authors:
+  - family-names: "Gajjar"
+    given-names: "Pratik Nileshkumar"
+    affiliation: "California State University, Dominguez Hills"
+type: software
+license: MIT
+year: 2026
+url: "https://github.com/pg2397/bladder-cancer-vit"
+abstract: >-
+  A Vision Transformer pipeline that segments urine cytology images into
+  background, cytoplasm and nucleus, and computes per-cell
+  nucleus-to-cytoplasm (N/C) ratios. The model matches an experienced
+  cytopathologist on ranking cells by severity (Spearman r = 0.855 vs 0.851).
+  This repository accompanies a CSUDH M.S. Computer Science Master's Project
+  report with industry mentorship from Cedars-Sinai Medical Center.
+preferred-citation:
+  type: thesis
+  thesis-type: "Master's Project Report"
+  authors:
+    - family-names: "Gajjar"
+      given-names: "Pratik Nileshkumar"
+  title: "Automated Bladder Cancer Screening using Vision Transformer (ViT)"
+  institution:
+    name: "California State University, Dominguez Hills"
+  year: 2026

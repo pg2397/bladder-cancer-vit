@@ -1,0 +1,35 @@
+# Core deep-learning stack -- pinned to the versions used in the report.
+# Python 3.10 is the tested interpreter.
+
+torch==2.1.2
+torchvision==0.16.2
+timm==0.9.16
+
+# Scientific computing
+numpy==1.26.4
+scipy==1.11.4
+scikit-learn==1.3.2
+scikit-image==0.22.0
+
+# Image I/O
+opencv-python==4.9.0.80
+Pillow==10.2.0
+
+# Plotting / figures
+matplotlib==3.8.2
+seaborn==0.13.2
+
+# Experiment plumbing
+PyYAML==6.0.1
+tqdm==4.66.1
+einops==0.7.0
+
+# Notebooks
+jupyter==1.0.0
+ipykernel==6.29.0
+
+# Optional: stain normalisation experiments (Macenko et al.)
+# staintools==2.1.2
+
+# Optional: metric tracking
+# tensorboard==2.16.2
